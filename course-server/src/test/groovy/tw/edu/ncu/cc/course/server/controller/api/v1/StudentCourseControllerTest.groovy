@@ -32,10 +32,10 @@ class StudentCourseControllerTest extends IntegrationSpecification {
                                 "passwordCard": "no",
                                 "isFirstRun": true,
                                 "isPreSelect": true,
-                                "teachers": "Huffman",
+                                "teachers": ["Huffman"],
                                 "credit": 2,
-                                "classRooms": "C2-209,C2-209",
-                                "time": "0-5,2-34",
+                                "classRooms": ["C2-209","C2-209"],
+                                "times": { "1" : [5,6] },
                                 "type": "required",
                                 "fullHalf": "half",
                                 "maxStudents": 0

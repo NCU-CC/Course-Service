@@ -9,7 +9,6 @@ import resource.ServerResource
 import specification.SpringSpecification
 import spock.lang.Shared
 
-
 class StudentCourseServiceImplTest extends SpringSpecification {
 
     @Autowired
@@ -34,10 +33,10 @@ class StudentCourseServiceImplTest extends SpringSpecification {
                                 "passwordCard": "no",
                                 "isFirstRun": true,
                                 "isPreSelect": true,
-                                "teachers": "Huffman",
+                                "teachers": ["Huffman"],
                                 "credit": 2,
-                                "classRooms": "C2-209,C2-209",
-                                "time": "0-5,2-34",
+                                "classRooms": ["C2-209","C2-209"],
+                                "times": { "1" : [5,6] },
                                 "type": "required",
                                 "fullHalf": "half",
                                 "maxStudents": 0
@@ -53,7 +52,7 @@ class StudentCourseServiceImplTest extends SpringSpecification {
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
-                        .withHeaders( new Header( "Content-Type", "application/json" ) )
+                        .withHeaders( new Header( "Content-Type", "application/json;charset=UTF-8" ) )
                         .withBody( serverResponse )
         )
         serverResource.mockServer().when(
@@ -63,7 +62,7 @@ class StudentCourseServiceImplTest extends SpringSpecification {
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
-                        .withHeaders( new Header( "Content-Type", "application/json" ) )
+                        .withHeaders( new Header( "Content-Type", "application/json;charset=UTF-8" ) )
                         .withBody( serverResponse )
         )
     }

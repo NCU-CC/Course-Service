@@ -1,35 +1,25 @@
 package tw.edu.ncu.cc.course.data.v1;
 
 
+import java.util.Map;
+
 public class Course {
-
-    public static enum FullHalf {
-        full, half
-    }
-
-    public static enum RequireType {
-        required, elective
-    }
-
-    public static enum PasswordCard {
-        no, optional, all
-    }
 
     private String no;
     private String classNo;
     private String name;
     private String memo;
     private String language;
-    private String teachers;
-    private String classRooms;
-    private String time;
+    private String[] teachers;
+    private String[] classRooms;
+    private Map< String, Integer[] > times;
     private boolean isMasterDoctor;
     private boolean isClosed;
     private boolean isFirstRun;
     private boolean isPreSelect;
-    private RequireType type;
-    private FullHalf fullHalf;
-    private PasswordCard passwordCard;
+    private String type;
+    private String fullHalf;
+    private String passwordCard;
     private int serialNo;
     private int maxStudents;
     private int credit;
@@ -82,35 +72,35 @@ public class Course {
         this.language = language;
     }
 
-    public String getTeachers() {
+    public String[] getTeachers() {
         return teachers;
     }
 
-    public void setTeachers( String teachers ) {
+    public void setTeachers( String[] teachers ) {
         this.teachers = teachers;
     }
 
-    public String getClassRooms() {
+    public String[] getClassRooms() {
         return classRooms;
     }
 
-    public void setClassRooms( String classRooms ) {
+    public void setClassRooms( String[] classRooms ) {
         this.classRooms = classRooms;
     }
 
-    public String getTime() {
-        return time;
+    public Map< String, Integer[] >  getTimes() {
+        return times;
     }
 
-    public void setTime( String time ) {
-        this.time = time;
+    public void setTimes( Map< String, Integer[] >  times ) {
+        this.times = times;
     }
 
     public boolean isMasterDoctor() {
         return isMasterDoctor;
     }
 
-    public void setMasterDoctor( boolean isMasterDoctor ) {
+    public void setIsMasterDoctor( boolean isMasterDoctor ) {
         this.isMasterDoctor = isMasterDoctor;
     }
 
@@ -118,7 +108,7 @@ public class Course {
         return isClosed;
     }
 
-    public void setClosed( boolean isClosed ) {
+    public void setIsClosed( boolean isClosed ) {
         this.isClosed = isClosed;
     }
 
@@ -126,7 +116,7 @@ public class Course {
         return isFirstRun;
     }
 
-    public void setFirstRun( boolean isFirstRun ) {
+    public void setIsFirstRun( boolean isFirstRun ) {
         this.isFirstRun = isFirstRun;
     }
 
@@ -134,31 +124,31 @@ public class Course {
         return isPreSelect;
     }
 
-    public void setPreSelect( boolean isPreSelect ) {
+    public void setIsPreSelect( boolean isPreSelect ) {
         this.isPreSelect = isPreSelect;
     }
 
-    public RequireType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType( RequireType type ) {
+    public void setType( String type ) {
         this.type = type;
     }
 
-    public FullHalf getFullHalf() {
+    public String getFullHalf() {
         return fullHalf;
     }
 
-    public void setFullHalf( FullHalf fullHalf ) {
+    public void setFullHalf( String fullHalf ) {
         this.fullHalf = fullHalf;
     }
 
-    public PasswordCard getPasswordCard() {
+    public String getPasswordCard() {
         return passwordCard;
     }
 
-    public void setPasswordCard( PasswordCard passwordCard ) {
+    public void setPasswordCard( String passwordCard ) {
         this.passwordCard = passwordCard;
     }
 
