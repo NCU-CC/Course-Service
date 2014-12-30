@@ -39,7 +39,7 @@ class RemoteHttpServiceImplTest extends SpringSpecification {
 
     def setup() {
         remoteHttpService = new RemoteHttpServiceImpl()
-        remoteHttpService.setRemotePrefix( "https://localhost:8899/" )
+        remoteHttpService.setRemotePrefix( "http://localhost:8898/" )
     }
 
     def "it can get response from remote server"() {
