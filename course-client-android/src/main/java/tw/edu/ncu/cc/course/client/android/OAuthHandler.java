@@ -45,10 +45,10 @@ public class OAuthHandler {
                 BearerToken.authorizationHeaderAccessMethod(),
                 AndroidHttp.newCompatibleTransport(),
                 new JacksonFactory(),
-                new GenericUrl( "https://140.115.3.97/oauth/oauth/token" ),
+                new GenericUrl( "https://appstore.cc.ncu.edu.tw/oauth/oauth/token" ),
                 new ClientParametersAuthentication( id, secret ),
                 id,
-                "https://140.115.3.97/oauth/oauth/authorize" )
+                "https://appstore.cc.ncu.edu.tw/oauth/oauth/authorize" )
                 .setCredentialStore( credentialStore )
                 .setScopes( Arrays.asList( "CLASS_READ" ) )
                 .build();
@@ -58,7 +58,7 @@ public class OAuthHandler {
         return new DialogFragmentController( fragmentManager ) {
             @Override
             public boolean isJavascriptEnabledForWebView() {
-                return false;
+                return true;
             }
             @Override
             public String getRedirectUri() throws IOException {
