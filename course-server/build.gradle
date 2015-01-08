@@ -24,8 +24,8 @@ repositories{
 dependencies{
 
     compile project(':course-data')
-    compile name: 'oauth-resource-0.1.5-SNAPSHOT'
-    compile name: 'oauth-data-0.1.5-SNAPSHOT'
+    compile name: 'oauth-resource-0.1.6'
+    compile name: 'oauth-data-0.1.6'
 
     compile 'org.springframework:spring-webmvc:4.1.1.RELEASE',
             'org.springframework:spring-test:4.1.1.RELEASE',
