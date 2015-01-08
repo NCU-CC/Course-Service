@@ -6,6 +6,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.wuman.android.auth.OAuthManager;
 import tw.edu.ncu.cc.course.client.tool.config.CourseConfig;
 import tw.edu.ncu.cc.course.client.tool.response.ResponseListener;
 import tw.edu.ncu.cc.course.data.v1.Course;
@@ -14,26 +15,31 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+// REQUIRE CLASS_READ SCOPE
+
 public class NCUCourseClient {
 
-    private OAuthHandler oAuthHandler;
+    private OAuthManager oauthManager;
     private RequestQueue queue;
     private String baseURL;
     private String token;
 
-    public NCUCourseClient( CourseConfig config, OAuthHandler oAuthHandler, Context context ) {
+    public NCUCourseClient( CourseConfig config, OAuthManager oauthManager, Context context ) {
         this.baseURL = config.getServerAddress();
         this.queue = Volley.newRequestQueue( context );
-        this.oAuthHandler = oAuthHandler;
-        initAccessToken();
+        this.oauthManager = oauthManager;
     }
 
-    private void initAccessToken() {
+    public void initAccessToken() {
         try {
-            this.token = oAuthHandler.authorize( "user", null, null ).getResult().getAccessToken();
+            this.token = oauthManager.authorizeExplicitly( "user", null, null ).getResult().getAccessToken();
         } catch ( IOException e ) {
             throw new RuntimeException( e );
         }
+    }
+
+    public void deleteAccessToken() {
+        oauthManager.deleteCredential( "user", null, null );
     }
 
     public void getSelectedCourse( ResponseListener< Course[] > responseListener ) {
@@ -61,9 +67,6 @@ public class NCUCourseClient {
                     @Override
                     public void onErrorResponse( VolleyError error ) {
                         responseListener.onError( error );
-                        if( error.networkResponse.statusCode == 403 ) {
-                            initAccessToken();
-                        }
                     }
                 }
         ) {
