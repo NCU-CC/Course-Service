@@ -21,15 +21,17 @@ public class APIExceptionHandler {
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     @ExceptionHandler( { AccessDeniedException.class } )
-    public ResponseEntity accessDenied( HttpServletRequest request ) {
+    public ResponseEntity< Error > accessDenied( HttpServletRequest request ) {
         logger.warn( "ACCESS DENIED FROM {} FOR {} ", request.getRemoteAddr(), request.getRequestURI() );
         return new ResponseEntity<>(
-                HttpStatus.FORBIDDEN
+                new Error(
+                        ErrorCode.ACCESS_DENIED, "access is denied"
+                ), HttpStatus.FORBIDDEN
         );
     }
 
     @ExceptionHandler( { HttpStatusCodeException.class, HttpServerErrorException.class } )
-    public ResponseEntity remoteResponseError( HttpStatusCodeException e ) {
+    public ResponseEntity< Error > remoteResponseError( HttpStatusCodeException e ) {
         switch ( e.getStatusCode() ) {
             case NOT_FOUND:
                 return new ResponseEntity<>(
@@ -38,7 +40,7 @@ public class APIExceptionHandler {
                         ), HttpStatus.NOT_FOUND
                 );
             default:
-                logger.warn( "REQUEST FAILED FROM REMOTE HOST [{}] ", e.getResponseHeaders().get( HttpHeaders.HOST ) );
+                logger.warn( "REQUEST FAILED FROM REMOTE HOST " + e.getResponseHeaders().getFirst( HttpHeaders.HOST ) );
                 return new ResponseEntity<>(
                         new Error(
                                 ErrorCode.RAW, e.getMessage() + " ->> " + e.getResponseBodyAsString()
@@ -48,8 +50,8 @@ public class APIExceptionHandler {
     }
 
     @ExceptionHandler( Exception.class )
-    public ResponseEntity exceptionHandler( Exception e ) {
-        logger.error( "SEVERE INTERNAL ERROR", e );
+    public ResponseEntity< Error > exceptionHandler( Exception e ) {
+        logger.error( "SERVER INTERNAL ERROR", e );
         return new ResponseEntity<>(
                 new Error(
                         ErrorCode.SERVER_ERROR, e.getMessage()
