@@ -17,12 +17,14 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     public LoggerInterceptor() {
-        blackList.add( "Accept-Encoding" );
-        blackList.add( "Accept-Language" );
-        blackList.add( "Cookie" );
-        blackList.add( "Accept" );
-        blackList.add( "Connection" );
-        blackList.add( "Host" );
+        blackList.add( "accept-encoding" );
+        blackList.add( "accept-language" );
+        blackList.add( "cache-control" );
+        blackList.add( "content-type" );
+        blackList.add( "cookie" );
+        blackList.add( "accept" );
+        blackList.add( "connection" );
+        blackList.add( "host" );
     }
 
     @Override
@@ -49,7 +51,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
         } else {
             String headerString = "";
             while( headers.hasMoreElements() ) {
-                String header = headers.nextElement();
+                String header = headers.nextElement().toLowerCase();
                 if( ! blackList.contains( header ) ) {
                     headerString += String.format( "{%s:%s}", header, request.getHeader( header ) );
                 }
