@@ -27,9 +27,9 @@ dependencies{
     compile name: 'oauth-resource-0.1.6'
     compile name: 'oauth-data-0.1.6'
 
-    compile 'org.springframework:spring-webmvc:4.1.1.RELEASE',
-            'org.springframework:spring-test:4.1.1.RELEASE',
-            'org.springframework:spring-context-support:4.1.1.RELEASE',
+    compile 'org.springframework:spring-webmvc:4.1.2.RELEASE',
+            'org.springframework:spring-test:4.1.2.RELEASE',
+            'org.springframework:spring-context-support:4.1.2.RELEASE',
             'org.springframework.security:spring-security-config:4.0.0.M2' ,
             'org.springframework.security:spring-security-test:4.0.0.M2',
             'org.hibernate:hibernate-entitymanager:4.3.6.Final',
