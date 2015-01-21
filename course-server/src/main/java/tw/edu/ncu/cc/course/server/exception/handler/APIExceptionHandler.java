@@ -2,6 +2,7 @@ package tw.edu.ncu.cc.course.server.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -37,6 +38,7 @@ public class APIExceptionHandler {
                         ), HttpStatus.NOT_FOUND
                 );
             default:
+                logger.warn( "REQUEST FAILED FROM REMOTE HOST [{}] ", e.getResponseHeaders().get( HttpHeaders.HOST ) );
                 return new ResponseEntity<>(
                         new Error(
                                 ErrorCode.RAW, e.getMessage() + " ->> " + e.getResponseBodyAsString()
