@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import tw.edu.ncu.cc.course.data.v1.message.Error;
@@ -14,8 +14,8 @@ import tw.edu.ncu.cc.course.data.v1.message.ErrorCode;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestController
-public class APIExceptionHandler {
+@ControllerAdvice
+public class ApplicationExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 

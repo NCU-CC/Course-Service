@@ -15,7 +15,7 @@
 
     <mvc:annotation-driven />
     <mvc:interceptors>
-        <bean class="tw.edu.ncu.cc.course.server.interceptor.LoggerInterceptor"/>
+        <bean class="tw.edu.ncu.cc.course.server.interceptor.ApplicationInterceptor"/>
     </mvc:interceptors>
 
     <security:global-method-security pre-post-annotations="enabled"/>

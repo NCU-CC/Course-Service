@@ -10,13 +10,13 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LoggerInterceptor extends HandlerInterceptorAdapter {
+public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 
     private Set< String > blackList = new HashSet<>();
 
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 
-    public LoggerInterceptor() {
+    public ApplicationInterceptor() {
         blackList.add( "accept-encoding" );
         blackList.add( "accept-language" );
         blackList.add( "cache-control" );
