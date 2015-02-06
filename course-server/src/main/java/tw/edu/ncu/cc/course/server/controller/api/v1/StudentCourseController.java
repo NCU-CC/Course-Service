@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import tw.edu.ncu.cc.course.data.v1.Course;
-import tw.edu.ncu.cc.course.server.exception.handler.APIExceptionHandler;
+import tw.edu.ncu.cc.course.server.controller.ApplicationController;
 import tw.edu.ncu.cc.course.server.service.StudentCourseService;
 
 @RestController
 @RequestMapping( value = "api/v1/student" )
-public class StudentCourseController extends APIExceptionHandler {
+public class StudentCourseController extends ApplicationController {
 
     private StudentCourseService studentCourseService;
 
