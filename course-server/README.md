@@ -2,8 +2,6 @@
 Course Information Provider
 
 ### Dependencies
-- c3p0 0.9.1.2
-- hibernate 4.3.6
 - spring-webmvc 4.1.1
 - spring-security 4.0.0.M2
 - openid-consumer 0.0.1 ( https://github.com/NCU-CC/OpenID-Consumer )
