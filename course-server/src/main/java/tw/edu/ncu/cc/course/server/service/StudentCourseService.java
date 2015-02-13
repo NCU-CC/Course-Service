@@ -4,7 +4,7 @@ import tw.edu.ncu.cc.course.data.v1.Course;
 
 public interface StudentCourseService {
 
-    public Course[] readSelectedCourses( String studentID );
-    public Course[] readTrackedCourses( String studentID );
+    public Course[] readSelectedCourses( String studentID, String language );
+    public Course[] readTrackedCourses( String studentID, String language );
 
 }
