@@ -3,6 +3,7 @@ package tw.edu.ncu.cc.course.server.controller.api.v1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,16 +24,18 @@ public class StudentCourseController extends ApplicationController {
 
     @PreAuthorize( "hasRole('CLASS_READ')" )
     @RequestMapping( value = "selected", method = RequestMethod.GET )
-    public Course[] searchSelectedCourse( Authentication authentication ) {
+    public Course[] searchSelectedCourse( @RequestHeader( value = "Accept-Language", defaultValue = "zh_TW" ) String language,
+                                          Authentication authentication ) {
 
-        return studentCourseService.readSelectedCourses( authentication.getName() );
+        return studentCourseService.readSelectedCourses( authentication.getName(), language );
     }
 
     @PreAuthorize( "hasRole('CLASS_READ')" )
     @RequestMapping( value = "tracking", method = RequestMethod.GET )
-    public Course[] searchTrackedCourse( Authentication authentication ) {
+    public Course[] searchTrackedCourse( @RequestHeader( value = "Accept-Language", defaultValue = "zh_TW" ) String language,
+                                         Authentication authentication ) {
 
-        return studentCourseService.readTrackedCourses( authentication.getName() );
+        return studentCourseService.readTrackedCourses( authentication.getName(), language );
     }
 
 }

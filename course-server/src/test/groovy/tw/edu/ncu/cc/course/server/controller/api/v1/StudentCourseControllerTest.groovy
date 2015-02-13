@@ -101,6 +101,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
+                        .withHeader( new Header( "Accept-Language", "en_US" ) )
                         .withPath( "/student/101502549/selected" )
         ).respond(
                 HttpResponse.response()
@@ -111,6 +112,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
+                        .withHeader( new Header( "Accept-Language", "en_US" ) )
                         .withPath( "/student/101502549/tracking" )
         ).respond(
                 HttpResponse.response()
@@ -123,7 +125,11 @@ class StudentCourseControllerTest extends IntegrationSpecification {
     def "it can get the selected course of user from valid access token"() {
         when:
             def response = JSON( server()
-                        .perform( get( "/api/v1/student/selected" ).header( "Authorization", "Bearer TOKEN1" ) )
+                        .perform(
+                            get( "/api/v1/student/selected" )
+                                .header( "Authorization", "Bearer TOKEN1" )
+                                .header( "Accept-Language", "en_US" )
+                        )
                         .andExpect( status().isOk() )
                         .andReturn()
             )
@@ -134,7 +140,11 @@ class StudentCourseControllerTest extends IntegrationSpecification {
     def "it can get the tracking course of user from valid access token"() {
         when:
             def response = JSON( server()
-                    .perform( get( "/api/v1/student/tracking" ).header( "Authorization", "Bearer TOKEN1" ) )
+                    .perform(
+                        get( "/api/v1/student/tracking" )
+                            .header( "Authorization", "Bearer TOKEN1" )
+                            .header( "Accept-Language", "en_US" )
+                    )
                     .andExpect( status().isOk() )
                     .andReturn()
             )
@@ -145,14 +155,22 @@ class StudentCourseControllerTest extends IntegrationSpecification {
     def "it will return 403 when access token has insufficient scope"() {
         expect:
             server()
-                    .perform( get( "/api/v1/student/tracking" ).header( "Authorization", "Bearer TOKEN2" ) )
+                    .perform(
+                        get( "/api/v1/student/tracking" )
+                            .header( "Authorization", "Bearer TOKEN2" )
+                            .header( "Accept-Language", "en_US" )
+                    )
                     .andExpect( status().is( 403 ) )
     }
 
     def "it will return 403 when access token is not exist"() {
         expect:
             server()
-                    .perform( get( "/api/v1/student/tracking" ).header( "Authorization", "Bearer TOKEN3" ) )
+                    .perform(
+                        get( "/api/v1/student/tracking" )
+                            .header( "Authorization", "Bearer TOKEN3" )
+                            .header( "Accept-Language", "en_US" )
+                    )
                     .andExpect( status().is( 403 ) )
     }
 
