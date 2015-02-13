@@ -10,9 +10,9 @@ import spock.lang.Shared
 import tw.edu.ncu.cc.course.data.v1.Unit
 
 
-class RemoteHttpServiceImplTest extends SpringSpecification {
+class ConnectionServiceImplTest extends SpringSpecification {
 
-    private RemoteHttpService remoteHttpService
+    private ConnectionService connectionService
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -38,13 +38,13 @@ class RemoteHttpServiceImplTest extends SpringSpecification {
     }
 
     def setup() {
-        remoteHttpService = new RemoteHttpServiceImpl()
-        remoteHttpService.setRemotePrefix( "http://localhost:8898/" )
+        connectionService = new ConnectionServiceImpl()
+        connectionService.setRemotePrefix( "http://localhost:8898/" )
     }
 
     def "it can get response from remote server"() {
         when:
-            def response = remoteHttpService.getObject( Unit.class, "testPath" )
+            def response = connectionService.connect( "testPath" ).get( Unit.class )
         then:
             response.name == "jason"
     }

@@ -16,7 +16,7 @@
 
     <import resource="security.xml"/>
 
-    <bean class="tw.edu.ncu.cc.course.server.service.RemoteHttpServiceImpl">
+    <bean class="tw.edu.ncu.cc.course.server.service.ConnectionServiceImpl">
         <property name="remotePrefix" value="${remote_course_service}"/>
     </bean>
 
