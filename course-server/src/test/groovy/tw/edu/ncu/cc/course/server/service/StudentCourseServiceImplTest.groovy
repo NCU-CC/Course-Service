@@ -48,6 +48,7 @@ class StudentCourseServiceImplTest extends SpringSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
+                        .withHeader( new Header( "Accept-Language", "zh_TW" ) )
                         .withPath( "/student/101502549/selected" )
         ).respond(
                 HttpResponse.response()
@@ -69,14 +70,14 @@ class StudentCourseServiceImplTest extends SpringSpecification {
 
     def "it can read selected courses from remote server"() {
         when:
-            def response = studentCourseService.readSelectedCourses( "101502549" )
+            def response = studentCourseService.readSelectedCourses( "101502549", "zh_TW" )
         then:
             response[0].serialNo == 12034
     }
 
     def "it can read tracking courses from remote server"() {
         when:
-            def response = studentCourseService.readTrackedCourses( "101502550" )
+            def response = studentCourseService.readTrackedCourses( "101502550", "zh_TW" )
         then:
             response[0].serialNo == 12034
     }
