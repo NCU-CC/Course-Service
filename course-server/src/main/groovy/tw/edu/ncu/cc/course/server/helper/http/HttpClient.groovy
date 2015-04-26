@@ -1,13 +1,7 @@
-package tw.edu.ncu.cc.course.server.helper.http;
+package tw.edu.ncu.cc.course.server.helper.http
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.util.UriTemplate;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.web.util.UriTemplate
 
 public class HttpClient {
 
@@ -28,12 +22,12 @@ public class HttpClient {
     }
 
     public HttpClient parameter( String key, String value ) {
-        httpInfo.setParameter( key, value );
+        httpInfo.addParameter( key, value );
         return this;
     }
 
     public HttpClient header( String key, String value ) {
-        httpInfo.setHeader( key, value );
+        httpInfo.addHeader( key, value );
         return this;
     }
 
@@ -76,17 +70,18 @@ public class HttpClient {
     }
 
     private void writeContent( HttpURLConnection connection ) throws IOException {
-        try ( OutputStream outputStream = connection.getOutputStream() ) {
-            DataOutputStream dataStream = new DataOutputStream( outputStream );
+        connection.outputStream.withStream {
+            DataOutputStream dataStream = new DataOutputStream( it );
             BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( dataStream, "UTF-8" ) );
             writer.write( httpInfo.getContent() );
             writer.flush();
         }
     }
 
-    private String getStringFromResponse( HttpURLConnection response ) throws IOException {
-        try ( InputStream inputStream = response.getInputStream() ) {
-            try ( BufferedReader reader = new BufferedReader( new InputStreamReader( inputStream, "UTF-8" ) ) ) {
+    private static String getStringFromResponse( HttpURLConnection response ) throws IOException {
+
+        response.inputStream.withStream { InputStream inputStream ->
+            new BufferedReader( new InputStreamReader( inputStream, "UTF-8" ) ).withReader { Reader reader ->
                 StringBuilder body = new StringBuilder( 255 );
                 String inputLine;
                 while ( ( inputLine = reader.readLine() ) != null )
@@ -96,7 +91,7 @@ public class HttpClient {
         }
     }
 
-    private < T > T convert( String message, Class<T> type ) throws IOException {
+    private static < T > T convert( String message, Class<T> type ) throws IOException {
         return new ObjectMapper().readValue( message, type );
     }
 
@@ -118,3 +113,4 @@ public class HttpClient {
     }
 
 }
+
