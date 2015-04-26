@@ -1,8 +1,8 @@
-package tw.edu.ncu.cc.course.server.service;
+package tw.edu.ncu.cc.course.server.service
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import tw.edu.ncu.cc.course.data.v1.Course;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import tw.edu.ncu.cc.course.data.v1.Course
 
 @Service
 public class StudentCourseServiceImpl implements StudentCourseService {
@@ -17,19 +17,19 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public Course[] readSelectedCourses( String studentID, String language ) {
         return connectionService
-                .connect( "student/{studentID}/selected" )
+                .connect( "/student/{studentID}/selected" )
                 .variables( studentID )
                 .header( "Accept-Language", language )
-                .get( Course[].class );
+                .get( Course[] );
     }
 
     @Override
     public Course[] readTrackedCourses( String studentID, String language ) {
         return connectionService
-                .connect( "student/{studentID}/tracking" )
+                .connect( "/student/{studentID}/tracking" )
                 .variables( studentID )
                 .header( "Accept-Language", language )
-                .get( Course[].class );
+                .get( Course[] );
     }
 
 }
