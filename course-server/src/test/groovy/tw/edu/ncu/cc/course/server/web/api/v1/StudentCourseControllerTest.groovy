@@ -1,4 +1,4 @@
-package tw.edu.ncu.cc.course.server.controller.api.v1
+package tw.edu.ncu.cc.course.server.web.api.v1
 
 import org.junit.ClassRule
 import org.mockserver.model.Header
@@ -10,6 +10,8 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
 
 class StudentCourseControllerTest extends IntegrationSpecification {
 
@@ -47,60 +49,6 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
-                        .withPath( "/token/string/TOKEN1" )
-        ).respond(
-                HttpResponse.response()
-                        .withStatusCode( 200 )
-                        .withHeaders( new Header( "Content-Type", "application/json" ) )
-                        .withBody(
-                            '''
-                            {
-                                "id" : 10,
-                                "user" : "101502549",
-                                "scope" : [ "CLASS_READ" ],
-                                "last_updated" : "2014-12-15"
-                            }
-                            '''
-                        )
-        )
-        serverResource.mockServer().when(
-                HttpRequest.request()
-                        .withMethod( "GET" )
-                        .withPath( "/token/string/TOKEN2" )
-        ).respond(
-                HttpResponse.response()
-                        .withStatusCode( 200 )
-                        .withHeaders( new Header( "Content-Type", "application/json" ) )
-                        .withBody(
-                            '''
-                            {
-                                "id" : 10,
-                                "user" : "101502549",
-                                "scope" : [ "OTHER_PERMISSION" ],
-                                "last_updated" : "2014-12-15"
-                            }
-                            '''
-                )
-        )
-        serverResource.mockServer().when(
-                HttpRequest.request()
-                        .withMethod( "GET" )
-                        .withPath( "/token/string/TOKEN3" )
-        ).respond(
-                HttpResponse.response()
-                        .withStatusCode( 404 )
-                        .withBody(
-                            '''
-                            {
-                                "error" : 1,
-                                "error_description" : "resourse not exist"
-                            }
-                            '''
-                )
-        )
-        serverResource.mockServer().when(
-                HttpRequest.request()
-                        .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "en_US" ) )
                         .withPath( "/student/101502549/selected" )
         ).respond(
@@ -126,8 +74,9 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         when:
             def response = JSON( server()
                         .perform(
-                            get( "/api/v1/student/selected" )
-                                .header( "Authorization", "Bearer TOKEN1" )
+                            get( "/v1/student/selected" )
+                                .with( apiToken() )
+                                .with( accessToken().user( "101502549" ).scope( "CLASS_READ" ) )
                                 .header( "Accept-Language", "en_US" )
                         )
                         .andExpect( status().isOk() )
@@ -141,8 +90,9 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         when:
             def response = JSON( server()
                     .perform(
-                        get( "/api/v1/student/tracking" )
-                            .header( "Authorization", "Bearer TOKEN1" )
+                        get( "/v1/student/tracking" )
+                            .with( apiToken() )
+                            .with( accessToken().user( "101502549" ).scope( "CLASS_READ" ) )
                             .header( "Accept-Language", "en_US" )
                     )
                     .andExpect( status().isOk() )
@@ -156,22 +106,23 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         expect:
             server()
                     .perform(
-                        get( "/api/v1/student/tracking" )
-                            .header( "Authorization", "Bearer TOKEN2" )
+                        get( "/v1/student/tracking" )
+                            .with( apiToken() )
+                            .with( accessToken().user( "101502549" ).scope( "INVALID" ) )
                             .header( "Accept-Language", "en_US" )
                     )
-                    .andExpect( status().is( 403 ) )
+                    .andExpect( status().isForbidden() )
     }
 
-    def "it will return 403 when access token is not exist"() {
+    def "it will return 400 when access token is not exist"() {
         expect:
             server()
                     .perform(
-                        get( "/api/v1/student/tracking" )
-                            .header( "Authorization", "Bearer TOKEN3" )
+                        get( "/v1/student/tracking" )
+                            .with( apiToken() )
                             .header( "Accept-Language", "en_US" )
                     )
-                    .andExpect( status().is( 403 ) )
+                    .andExpect( status().isBadRequest() )
     }
 
 }
