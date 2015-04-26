@@ -11,18 +11,12 @@ import org.springframework.web.context.WebApplicationContext
 public abstract class IntegrationSpecification extends SpringSpecification {
 
     private MockMvc mockMvc
-    private FilterChainProxy securityFilterChain;
-    private WebApplicationContext webApplicationContext
 
     @Autowired
-    public void setSecurityFilterChain( FilterChainProxy securityFilterChain ) {
-        this.securityFilterChain = securityFilterChain
-    }
+    def FilterChainProxy securityFilterChain
 
     @Autowired
-    public void setWebApplicationContext( WebApplicationContext webApplicationContext ) {
-        this.webApplicationContext = webApplicationContext
-    }
+    def WebApplicationContext webApplicationContext
 
     def setup() {
         mockMvc = MockMvcBuilders
