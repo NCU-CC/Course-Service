@@ -1,25 +1,36 @@
 ## Course-Server
 Course Information Provider
 
+### Structure
+This is only a guard service of course information. It connects to a course sevice and a oauth service with http.
+
 ### Dependencies
-- spring-webmvc 4.1.1
-- spring-security 4.0.0.M2
-- openid-consumer 0.0.1 ( https://github.com/NCU-CC/OpenID-Consumer )
-- oauth-resource 0.1.5  ( https://github.com/NCU-CC/OAuth-Service )
-- oauth-data 0.1.5      ( https://github.com/NCU-CC/OAuth-Service )
+- Spring MVC
+- Spring Boot
+- Spring Security
 
 ### Gradle
-- jettyStart : run embedded server
-- jettyStop  : stop embedded server above
+- appStart  : run server in production env
+- appStop   : stop server in production env
+
+### Packages
+- exception  : spring exception handler
+- interceptor: spring interceptor
+- web        : spring controller
+- service    : spring service
+- config     : spring java config
 
 ### Resources
-resources are divided into two environments for Spring
+There are two environments for this project
 
-- develope : include embedded database and mocked elements
+- test : `application-test.yml`
+- production : `application-production.yml`
 
-- production : put following files into **src/main/resources/production**
-    - remote.properties
-    ```
-        remote_course_service = https://localhost/course/api/v0/
-        remote_token_service  = https://localhost/oauth/management/v1/token/string/
-    ```
+You have to write your own production config. See `.example` file in resources root path
+
+
+### API
+
+This api server is protected by api token.
+
+See https://github.com/NCU-CC/API-Documentation for further information
