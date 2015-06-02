@@ -21,26 +21,29 @@ class StudentCourseServiceImplTest extends SpringSpecification {
     private String serverResponse =
                         '''
                         [
-                             {
-                                "serialNo" : 12034,
-                                "no" : "EL5001",
-                                "classNo" : "*",
-                                "name" : "Literature",
-                                "isClosed" : false,
-                                "memo": "freshman",
-                                "isMasterDoctor": false,
-                                "language": "Chinese",
-                                "passwordCard": "no",
-                                "isFirstRun": true,
-                                "isPreSelect": true,
-                                "teachers": ["Huffman"],
-                                "credit": 2,
-                                "classRooms": ["C2-209","C2-209"],
-                                "times": { "1" : [5,6] },
-                                "type": "required",
-                                "fullHalf": "half",
-                                "maxStudents": 0
-                            }
+                          {
+                            "serialNo" : 12034,
+                            "no" : "EL5001",
+                            "classNo" : "*",
+                            "name" : "文學\\/文化理論導讀",
+                            "isCanceled" : false,
+                            "memo": "限三、四年級",
+                            "isMasterDoctor": false,
+                            "language": "國語",
+                            "usePasswordCard": "不使用",
+                            "isFirstRun": true,
+                            "isPreSelect": true,
+                            "teachers": "錢夫人,阿土伯",
+                            "credit": 2,
+                            "classRooms": "C2-209,C2-209",
+                            "time": {
+                                      "0": ["5"],
+                                      "2": ["3", "4"]
+                                    },
+                            "type": "必修",
+                            "fullHalf": "全",
+                            "limit": 0
+                          }
                         ]
                         '''
 

@@ -7,29 +7,34 @@ import tw.edu.ncu.cc.course.data.v1.Course
 @Service
 public class StudentCourseServiceImpl implements StudentCourseService {
 
-    private ConnectionService connectionService;
-
     @Autowired
-    public void setConnectionService( ConnectionService connectionService ) {
-        this.connectionService = connectionService;
-    }
+    def ConnectionService connectionService;
 
     @Override
-    public Course[] readSelectedCourses( String studentID, String language ) {
-        return connectionService
+    public Course[] readSelectedCourses( String studentId, String language ) {
+        connectionService
                 .connect( "/student/{studentID}/selected" )
-                .variables( studentID )
+                .variables( studentId )
                 .header( "Accept-Language", language )
-                .get( Course[] );
+                .get( Course[] )
     }
 
     @Override
-    public Course[] readTrackedCourses( String studentID, String language ) {
-        return connectionService
+    public Course[] readTrackedCourses( String studentId, String language ) {
+        connectionService
                 .connect( "/student/{studentID}/tracking" )
-                .variables( studentID )
+                .variables( studentId )
                 .header( "Accept-Language", language )
-                .get( Course[] );
+                .get( Course[] )
+    }
+
+    @Override
+    Course[] readRejectedCourses( String studentId, String language ) {
+        connectionService
+                .connect( "/student/{studentID}/rejected" )
+                .variables( studentId )
+                .header( "Accept-Language", language )
+                .get( Course[] )
     }
 
 }
