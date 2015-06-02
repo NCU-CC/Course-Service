@@ -2,23 +2,23 @@ package tw.edu.ncu.cc.course.data.v1
 
 public class Course {
 
+    def Integer serialNo
     def String no
     def String classNo
     def String name
+    def Boolean isCanceled
     def String memo
+    def Boolean isMasterDoctor
     def String language
-    def String[] teachers
-    def String[] classRooms
-    def Map< String, Integer[] > times
-    def boolean isMasterDoctor
-    def boolean isClosed
-    def boolean isFirstRun
-    def boolean isPreSelect
+    def String usePasswordCard
+    def Boolean isFirstRun
+    def Boolean isPreSelect
+    def String teachers
+    def Integer credit
+    def String classRooms
+    def Map< String, String[] > time
     def String type
     def String fullHalf
-    def String passwordCard
-    def int serialNo
-    def int maxStudents
-    def int credit
+    def Integer limit
 
 }
