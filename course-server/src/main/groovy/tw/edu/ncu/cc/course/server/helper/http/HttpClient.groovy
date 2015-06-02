@@ -100,7 +100,9 @@ public class HttpClient {
         if( httpInfo.getParameters().size() != 0 ) {
             StringBuilder builder = new StringBuilder( httpInfo.getUrl() + "?" );
             for( Map.Entry< String, String > parameter : httpInfo.getParameters().entrySet() ) {
-                builder.append( parameter.getKey() ).append( "=" ).append( parameter.getValue() ).append( "&" );
+                if( parameter.getValue() != null ) {
+                    builder.append( parameter.getKey() ).append( "=" ).append( parameter.getValue() ).append( "&" );
+                }
             }
             url = builder.deleteCharAt( builder.length()-1 ).toString();
         }

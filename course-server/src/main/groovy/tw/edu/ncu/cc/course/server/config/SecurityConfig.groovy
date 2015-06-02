@@ -9,7 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import tw.edu.ncu.cc.oauth.resource.filter.TokenAccessDecisionFilter
+import tw.edu.ncu.cc.oauth.resource.filter.AccessTokenDecisionFilter
+import tw.edu.ncu.cc.oauth.resource.filter.ApiTokenDecisionFilter
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( prePostEnabled = true )
@@ -17,20 +18,43 @@ public class SecurityConfig {
 
     @Order( 1 )
     @Configuration
-    public static class OauthGuard extends WebSecurityConfigurerAdapter {
+    public static class OauthGuard1 extends WebSecurityConfigurerAdapter {
 
         @Autowired
-        def TokenAccessDecisionFilter tokenAccessDecisionFilter
+        def ApiTokenDecisionFilter apiTokenDecisionFilter
 
         @Override
         protected void configure( HttpSecurity http ) throws Exception {
-            http.antMatcher( "/v*/**" )
-                    .addFilterAfter( tokenAccessDecisionFilter, UsernamePasswordAuthenticationFilter.class )
+            http.requestMatchers()
+                    .antMatchers( "/v*/search/**" )
+                    .antMatchers( "/v*/course/**" )
+                    .antMatchers( "/v*/status/**" )
+                    .antMatchers( "/v*/unit/**" )
+                .and()
+                    .addFilterAfter( apiTokenDecisionFilter, UsernamePasswordAuthenticationFilter )
                     .csrf().disable()
+
         }
     }
 
     @Order( 2 )
+    @Configuration
+    public static class OauthGuard2 extends WebSecurityConfigurerAdapter {
+
+        @Autowired
+        def AccessTokenDecisionFilter accessTokenDecisionFilter
+
+        @Override
+        protected void configure( HttpSecurity http ) throws Exception {
+            http.requestMatchers()
+                    .antMatchers( "/v*/student/**" )
+                .and()
+                    .addFilterAfter( accessTokenDecisionFilter, UsernamePasswordAuthenticationFilter )
+                    .csrf().disable()
+        }
+    }
+
+    @Order( 3 )
     @Configuration
     public static class ManagementAPI extends WebSecurityConfigurerAdapter {
 

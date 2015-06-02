@@ -11,26 +11,34 @@ import tw.edu.ncu.cc.course.data.v1.Course
 import tw.edu.ncu.cc.course.server.service.StudentCourseService
 
 @RestController
-@RequestMapping( value = "v1/student" )
+@RequestMapping( value = "v1/student", method = RequestMethod.GET )
 public class StudentCourseController {
 
     @Autowired
     def StudentCourseService studentCourseService
 
-    @PreAuthorize( "hasAuthority('CLASS_READ')" )
-    @RequestMapping( value = "selected", method = RequestMethod.GET )
+    @PreAuthorize( "hasAuthority('course.schedule.read')" )
+    @RequestMapping( value = "selected" )
     public Course[] searchSelectedCourse( @RequestHeader( value = "Accept-Language", defaultValue = "zh_TW" ) String language,
                                           Authentication authentication ) {
 
         studentCourseService.readSelectedCourses( authentication.name, language )
     }
 
-    @PreAuthorize( "hasAuthority('CLASS_READ')" )
-    @RequestMapping( value = "tracking", method = RequestMethod.GET )
+    @PreAuthorize( "hasAuthority('course.schedule.read')" )
+    @RequestMapping( value = "tracking" )
     public Course[] searchTrackedCourse( @RequestHeader( value = "Accept-Language", defaultValue = "zh_TW" ) String language,
                                          Authentication authentication ) {
 
         studentCourseService.readTrackedCourses( authentication.name, language )
+    }
+
+    @PreAuthorize( "hasAuthority('course.schedule.read')" )
+    @RequestMapping( value = "rejected" )
+    public Course[] searchRejectedCourse( @RequestHeader( value = "Accept-Language", defaultValue = "zh_TW" ) String language,
+                                         Authentication authentication ) {
+
+        studentCourseService.readRejectedCourses( authentication.name, language )
     }
 
 }
