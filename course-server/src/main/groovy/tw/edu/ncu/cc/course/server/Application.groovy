@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling
 import tw.edu.ncu.cc.course.server.config.BeanConfig
 import tw.edu.ncu.cc.course.server.config.MvcConfig
 import tw.edu.ncu.cc.course.server.config.SecurityConfig
+import tw.edu.ncu.cc.springboot.config.ssl.EnableSSLConfiguration
 
+@EnableSSLConfiguration
 @EnableScheduling
 @SpringBootApplication( exclude = [ ErrorMvcAutoConfiguration ] )
 @Import( [ SecurityConfig, BeanConfig, MvcConfig ] )
