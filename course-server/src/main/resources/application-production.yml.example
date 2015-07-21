@@ -4,10 +4,6 @@ server:
 logging:
   level: INFO
 
-ssl:
-  verification:
-    enabled: false
-
 custom:
   management:
     security:
