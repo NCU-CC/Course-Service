@@ -12,10 +12,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.HttpStatusCodeException
-import tw.edu.ncu.cc.course.data.v1.message.Error
-import tw.edu.ncu.cc.course.data.v1.message.ErrorCode
 import tw.edu.ncu.cc.oauth.data.v1.message.ErrorObject
 
 import javax.servlet.http.HttpServletRequest
@@ -26,12 +23,10 @@ public class ApplicationExceptionHandler {
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     @ExceptionHandler( AccessDeniedException.class )
-    public ResponseEntity< Error > accessDenied( HttpServletRequest request, AccessDeniedException e ) {
+    public ResponseEntity< ErrorObject > accessDenied( HttpServletRequest request, AccessDeniedException e ) {
         logger.warn( "ACCESS DENIED FOR {} FROM {}", request.getRequestURI(), request.getRemoteAddr() );
         new ResponseEntity<>(
-                new Error(
-                        ErrorCode.ACCESS_DENIED, e.message
-                ), HttpStatus.FORBIDDEN
+                new ErrorObject( e.message ), HttpStatus.FORBIDDEN
         )
     }
 
