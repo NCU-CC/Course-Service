@@ -1,6 +1,8 @@
 server:
   port: 8181
 spring:
+  application:
+    name: course
   main:
     show_banner: false
   profiles:

@@ -23,9 +23,8 @@ repositories{
 dependencies{
 
     compile project(':course-data')
-    compile name: 'oauth-resource-0.7.0'
-    compile name: 'oauth-data-0.7.0'
-    compile name: 'config-ssl-0.2.0'
+    compile name: 'oauth-resource-0.9.0.0'
+    compile name: 'oauth-data-0.9.0'
 
     compile 'org.springframework.security:spring-security-config:4.0.0.RELEASE' ,
             'org.springframework.security:spring-security-test:4.0.0.RELEASE',
@@ -50,6 +49,4 @@ gretty {
     springBoot = true
     springBootVersion = '1.2.3.RELEASE'
     springBootMainClass = 'tw.edu.ncu.cc.course.server.Application'
-    httpsEnabled = true
-    httpsPort = 5278
 }
