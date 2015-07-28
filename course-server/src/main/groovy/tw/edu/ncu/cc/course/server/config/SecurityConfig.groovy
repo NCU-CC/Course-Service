@@ -26,10 +26,12 @@ public class SecurityConfig {
         @Override
         protected void configure( HttpSecurity http ) throws Exception {
             http.requestMatchers()
-                    .antMatchers( "/v*/search/**" )
-                    .antMatchers( "/v*/course/**" )
+                    .antMatchers( "/v*/courses/**" )
+                    .antMatchers( "/v*/departments/**" )
+                    .antMatchers( "/v*/targets/**" )
+                    .antMatchers( "/v*/summer/**" )
+                    .antMatchers( "/v*/colleges/**" )
                     .antMatchers( "/v*/status/**" )
-                    .antMatchers( "/v*/unit/**" )
                 .and()
                     .addFilterAfter( apiTokenDecisionFilter, UsernamePasswordAuthenticationFilter )
                     .csrf().disable()

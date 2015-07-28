@@ -4,6 +4,7 @@ import org.junit.ClassRule
 import org.mockserver.model.Header
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.Parameter
 import resource.ServerResource
 import specification.IntegrationSpecification
 import spock.lang.Shared
@@ -52,7 +53,8 @@ class StudentCourseControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "en_US" ) )
-                        .withPath( "/student/101502549/selected" )
+                        .withPath( "/students/101502549/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "selected" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -63,7 +65,20 @@ class StudentCourseControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "en_US" ) )
-                        .withPath( "/student/101502549/tracking" )
+                        .withPath( "/students/101502549/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "tracking" ) )
+        ).respond(
+                HttpResponse.response()
+                        .withStatusCode( 200 )
+                        .withHeaders( new Header( "Content-Type", "application/json" ) )
+                        .withBody( serverResponse )
+        )
+        serverResource.mockServer().when(
+                HttpRequest.request()
+                        .withMethod( "GET" )
+                        .withHeader( new Header( "Accept-Language", "en_US" ) )
+                        .withPath( "/students/101502549/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "rejected" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -94,6 +109,21 @@ class StudentCourseControllerTest extends IntegrationSpecification {
                         get( "/v1/student/tracking" )
                             .with( accessToken().user( "101502549" ).scope( "course.schedule.read" ) )
                             .header( "Accept-Language", "en_US" )
+                    ).andExpect(
+                            status().isOk()
+                    ).andReturn()
+            )
+        then:
+            response[0].serialNo == 12034
+    }
+
+    def "it can provide the rejected course of user from valid access token"() {
+        when:
+            def response = JSON(
+                    server().perform(
+                            get( "/v1/student/rejected" )
+                                    .with( accessToken().user( "101502549" ).scope( "course.schedule.read" ) )
+                                    .header( "Accept-Language", "en_US" )
                     ).andExpect(
                             status().isOk()
                     ).andReturn()

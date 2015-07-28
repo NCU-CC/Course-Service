@@ -4,6 +4,7 @@ import org.junit.ClassRule
 import org.mockserver.model.Header
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.Parameter
 import org.springframework.beans.factory.annotation.Autowired
 import resource.ServerResource
 import specification.SpringSpecification
@@ -52,7 +53,8 @@ class StudentCourseServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/student/101502549/selected" )
+                        .withPath( "/students/101502549/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "selected" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -62,7 +64,8 @@ class StudentCourseServiceImplTest extends SpringSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
-                        .withPath( "/student/101502550/tracking" )
+                        .withPath( "/students/101502550/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "tracking" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

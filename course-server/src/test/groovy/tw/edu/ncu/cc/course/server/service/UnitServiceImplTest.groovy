@@ -23,7 +23,7 @@ class UnitServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/college" )
+                        .withPath( "/colleges" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -43,7 +43,7 @@ class UnitServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/college/deptI1I1000I0/department" )
+                        .withPath( "/colleges/deptI1I1000I0/departments" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -63,7 +63,7 @@ class UnitServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/department/deptI1I1001I0/target" )
+                        .withPath( "/departments/deptI1I1001I0/targets" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

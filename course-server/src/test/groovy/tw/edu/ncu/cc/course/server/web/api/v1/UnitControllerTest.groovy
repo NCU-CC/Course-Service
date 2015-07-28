@@ -23,7 +23,7 @@ class UnitControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/college" )
+                        .withPath( "/colleges" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -43,7 +43,7 @@ class UnitControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/college/deptI1I1000I0/department" )
+                        .withPath( "/colleges/deptI1I1000I0/departments" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -63,7 +63,7 @@ class UnitControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/unit/department/deptI1I1001I0/target" )
+                        .withPath( "/departments/deptI1I1001I0/targets" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -85,7 +85,7 @@ class UnitControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/unit/college" )
+                            get( "/v1/colleges" )
                                 .with( apiToken() )
                                 .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -100,7 +100,7 @@ class UnitControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/unit/college/deptI1I1000I0/department" )
+                            get( "/v1/colleges/deptI1I1000I0/departments" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -115,7 +115,7 @@ class UnitControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/unit/department/deptI1I1001I0/target" )
+                            get( "/v1/departments/deptI1I1001I0/targets" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -129,7 +129,7 @@ class UnitControllerTest extends IntegrationSpecification {
     def "it cannot get any information if api token not provided"() {
         expect:
             server().perform(
-                    get( "/v1/unit/department/deptI1I1001I0/target" )
+                    get( "/v1/departments/deptI1I1001I0/targets" )
                         .header( "Accept-Language", "zh_TW" )
             ).andExpect(
                     status().isBadRequest()

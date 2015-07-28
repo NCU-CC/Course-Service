@@ -51,7 +51,7 @@ class SearchServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search" ) //TODO ADD PARAMS
+                        .withPath( "/courses" ) //TODO ADD PARAMS
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -63,7 +63,7 @@ class SearchServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/department/deptI1I1000I0" )
+                        .withPath( "/departments/deptI1I1000I0/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -75,7 +75,7 @@ class SearchServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/target/cofuZdeptI1I1001I0ZcofgI0" )
+                        .withPath( "/targets/cofuZdeptI1I1001I0ZcofgI0/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -87,7 +87,7 @@ class SearchServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/summer/105" )
+                        .withPath( "/summer/105/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

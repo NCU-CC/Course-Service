@@ -13,7 +13,7 @@ class LimitServiceImpl implements LimitService {
     @Override
     Limit findByCourseSerialNo( String language, String serialNo ) {
         connectionService
-                .connect( "/course/{serialNo}/limit" )
+                .connect( "/courses/{serialNo}/limit" )
                 .variables( serialNo )
                 .header( "Accept-Language", language )
                 .get( Limit )

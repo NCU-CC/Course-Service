@@ -13,7 +13,7 @@ class SearchServiceImpl implements SearchService {
     @Override
     Course[] search( String language, String departmentId, Integer week, String period, String keyword, Integer limit ) {
         connectionService
-                .connect( "/search" )
+                .connect( "/courses" )
                 .parameter( "deptId", departmentId )
                 .parameter( "keyword", keyword )
                 .parameter( "period", period )
@@ -26,7 +26,7 @@ class SearchServiceImpl implements SearchService {
     @Override
     Course[] findByDepartmentId( String language, String departmentId ) {
         connectionService
-                .connect( "/search/department/{departmentId}" )
+                .connect( "/departments/{departmentId}/courses" )
                 .variables( departmentId )
                 .header( "Accept-Language", language )
                 .get( Course[] )
@@ -35,7 +35,7 @@ class SearchServiceImpl implements SearchService {
     @Override
     Course[] findByTargetId( String language, String targetId ) {
         connectionService
-                .connect( "/search/target/{targetId}" )
+                .connect( "/targets/{targetId}/courses" )
                 .variables( targetId )
                 .header( "Accept-Language", language )
                 .get( Course[] )
@@ -44,7 +44,7 @@ class SearchServiceImpl implements SearchService {
     @Override
     Course[] findBySummerStage( String language, String stage ) {
         connectionService
-                .connect( "/search/summer/{stage}" )
+                .connect( "/summer/{stage}/courses" )
                 .variables( stage )
                 .header( "Accept-Language", language )
                 .get( Course[] )

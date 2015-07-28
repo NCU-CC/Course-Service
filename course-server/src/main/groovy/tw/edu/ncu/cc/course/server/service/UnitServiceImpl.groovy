@@ -13,7 +13,7 @@ class UnitServiceImpl implements UnitService {
     @Override
     Unit[] findAllColleges( String language ) {
         connectionService
-                .connect( "/unit/college" )
+                .connect( "/colleges" )
                 .header( "Accept-Language", language )
                 .get( Unit[] )
     }
@@ -21,7 +21,7 @@ class UnitServiceImpl implements UnitService {
     @Override
     Unit[] findAllDepartmentsByCollegeId( String language, String collegeId ) {
         connectionService
-                .connect( "/unit/college/{collegeId}/department" )
+                .connect( "/colleges/{collegeId}/departments" )
                 .variables( collegeId )
                 .header( "Accept-Language", language )
                 .get( Unit[] )
@@ -30,7 +30,7 @@ class UnitServiceImpl implements UnitService {
     @Override
     Unit[] findAllTargetsByDepartmentId( String language, String departmentId ) {
         connectionService
-                .connect( "/unit/department/{departmentId}/target" )
+                .connect( "/departments/{departmentId}/targets" )
                 .variables( departmentId )
                 .header( "Accept-Language", language )
                 .get( Unit[] )
