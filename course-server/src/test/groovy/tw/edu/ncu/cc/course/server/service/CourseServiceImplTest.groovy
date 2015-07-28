@@ -23,7 +23,7 @@ class CourseServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/course/12034" )
+                        .withPath( "/courses/12034" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

@@ -23,7 +23,7 @@ class LimitServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/course/91001/limit" )
+                        .withPath( "/courses/91001/limit" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

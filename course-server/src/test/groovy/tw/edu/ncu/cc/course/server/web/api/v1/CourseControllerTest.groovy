@@ -23,7 +23,7 @@ class CourseControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/course/12034" )
+                        .withPath( "/courses/12034" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -60,7 +60,7 @@ class CourseControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/course/91001/limit" )
+                        .withPath( "/courses/91001/limit" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -82,7 +82,7 @@ class CourseControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/course/12034" )
+                            get( "/v1/courses/12034" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -97,7 +97,7 @@ class CourseControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/course/91001/limit" )
+                            get( "/v1/courses/91001/limit" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -111,7 +111,7 @@ class CourseControllerTest extends IntegrationSpecification {
     def "it cannot provide any information if api token not provided"() {
         expect:
             server().perform(
-                    get( "/v1/course/91001/limit" )
+                    get( "/v1/courses/91001/limit" )
                             .header( "Accept-Language", "zh_TW" )
             ).andExpect(
                     status().isBadRequest()

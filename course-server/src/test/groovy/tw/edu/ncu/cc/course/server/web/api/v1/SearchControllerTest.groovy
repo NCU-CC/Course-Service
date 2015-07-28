@@ -4,6 +4,7 @@ import org.junit.ClassRule
 import org.mockserver.model.Header
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.Parameter
 import resource.ServerResource
 import specification.IntegrationSpecification
 import spock.lang.Shared
@@ -51,7 +52,8 @@ class SearchControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search" )  //TODO ADD PARAMS
+                        .withPath( "/courses" )
+                        .withQueryStringParameter( new Parameter( "deptId", "deptI1I1000I0" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -63,7 +65,7 @@ class SearchControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/department/deptI1I1000I0" )
+                        .withPath( "/departments/deptI1I1000I0/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -75,7 +77,7 @@ class SearchControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/target/cofuZdeptI1I1001I0ZcofgI0" )
+                        .withPath( "/targets/cofuZdeptI1I1001I0ZcofgI0/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -87,7 +89,7 @@ class SearchControllerTest extends IntegrationSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/search/summer/105" )
+                        .withPath( "/summer/105/courses" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -100,7 +102,7 @@ class SearchControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/search" )
+                            get( "/v1/courses" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                                     .param( "deptId", "deptI1I1000I0" )
@@ -116,7 +118,7 @@ class SearchControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/search/department/deptI1I1000I0" )
+                            get( "/v1/departments/deptI1I1000I0/courses" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -131,7 +133,7 @@ class SearchControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/search/target/cofuZdeptI1I1001I0ZcofgI0" )
+                            get( "/v1/targets/cofuZdeptI1I1001I0ZcofgI0/courses" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -146,7 +148,7 @@ class SearchControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/search/summer/105" )
+                            get( "/v1/summer/105/courses" )
                                     .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
@@ -160,7 +162,7 @@ class SearchControllerTest extends IntegrationSpecification {
     def "it cannot provide any information if api token not provided"() {
         expect:
             server().perform(
-                    get( "/v1/search/summer/105" )
+                    get( "/v1/summer/105/courses" )
                             .header( "Accept-Language", "zh_TW" )
             ).andExpect(
                     status().isBadRequest()
