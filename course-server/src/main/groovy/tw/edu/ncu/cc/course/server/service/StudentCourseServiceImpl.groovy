@@ -13,7 +13,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public Course[] readSelectedCourses( String studentId, String language ) {
         connectionService
-                .connect( "/student/{studentID}/selected" )
+                .connect( "/students/{studentID}/courses?filter=selected" )
                 .variables( studentId )
                 .header( "Accept-Language", language )
                 .get( Course[] )
@@ -22,7 +22,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public Course[] readTrackedCourses( String studentId, String language ) {
         connectionService
-                .connect( "/student/{studentID}/tracking" )
+                .connect( "/students/{studentID}/courses?filter=tracking" )
                 .variables( studentId )
                 .header( "Accept-Language", language )
                 .get( Course[] )
@@ -31,7 +31,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     Course[] readRejectedCourses( String studentId, String language ) {
         connectionService
-                .connect( "/student/{studentID}/rejected" )
+                .connect( "/students/{studentID}/courses?filter=rejected" )
                 .variables( studentId )
                 .header( "Accept-Language", language )
                 .get( Course[] )

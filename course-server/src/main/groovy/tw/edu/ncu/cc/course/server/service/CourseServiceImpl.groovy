@@ -13,7 +13,7 @@ class CourseServiceImpl implements CourseService {
     @Override
     Course findBySerialNo( String language, String serialNo ) {
         connectionService
-                .connect( "/course/{serialNo}" )
+                .connect( "/courses/{serialNo}" )
                 .variables( serialNo )
                 .header( "Accept-Language", language )
                 .get( Course )
