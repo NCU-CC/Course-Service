@@ -13,9 +13,9 @@ public class Course {
     def String passwordCard
     def Boolean isFirstRun
     def Boolean isPreSelect
-    def String teachers
+    def String[] teachers
     def Integer credit
-    def String classRooms
+    def String[] classRooms
     def Map< String, String[] > times
     def String type
     def String fullHalf

@@ -34,9 +34,9 @@ class StudentCourseServiceImplTest extends SpringSpecification {
                             "passwordCard": "不使用",
                             "isFirstRun": true,
                             "isPreSelect": true,
-                            "teachers": "錢夫人,阿土伯",
+                            "teachers": [  "錢夫人", "阿土伯" ],
                             "credit": 2,
-                            "classRooms": "C2-209,C2-209",
+                            "classRooms": [ "C2-209", "C2-209" ],
                             "times": {
                                       "0": ["5"],
                                       "2": ["3", "4"]
