@@ -13,5 +13,5 @@ custom:
       prefix: https://localhost/Course/api/v0/
 ncu:
   oauth:
-    oauth-enabled: true
+    api-token: your-api-token
     server-path: https://localhost/oauth
