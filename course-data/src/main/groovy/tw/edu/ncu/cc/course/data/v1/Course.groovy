@@ -6,7 +6,7 @@ public class Course {
     def String no
     def String classNo
     def String name
-    def Boolean isCanceled
+    def Boolean isClosed
     def String memo
     def Boolean isMasterDoctor
     def String language

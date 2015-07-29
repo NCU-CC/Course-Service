@@ -27,7 +27,7 @@ class StudentCourseServiceImplTest extends SpringSpecification {
                             "no" : "EL5001",
                             "classNo" : "*",
                             "name" : "文學\\/文化理論導讀",
-                            "isCanceled" : false,
+                            "isClosed" : false,
                             "memo": "限三、四年級",
                             "isMasterDoctor": false,
                             "language": "國語",
