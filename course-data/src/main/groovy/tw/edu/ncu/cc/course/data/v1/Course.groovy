@@ -10,15 +10,15 @@ public class Course {
     def String memo
     def Boolean isMasterDoctor
     def String language
-    def String usePasswordCard
+    def String passwordCard
     def Boolean isFirstRun
     def Boolean isPreSelect
     def String teachers
     def Integer credit
     def String classRooms
-    def Map< String, String[] > time
+    def Map< String, String[] > times
     def String type
     def String fullHalf
-    def Integer limit
+    def Integer maxStudents
 
 }

@@ -39,19 +39,19 @@ class CourseServiceImplTest extends SpringSpecification {
                             "memo": "限三、四年級",
                             "isMasterDoctor": false,
                             "language": "國語",
-                            "usePasswordCard": "不使用",
+                            "passwordCard": "不使用",
                             "isFirstRun": true,
                             "isPreSelect": true,
                             "teachers": "錢夫人,阿土伯",
                             "credit": 2,
                             "classRooms": "C2-209,C2-209",
-                            "time": {
+                            "times": {
                                       "0": ["5"],
                                       "2": ["3", "4"]
                                     },
                             "type": "必修",
                             "fullHalf": "全",
-                            "limit": 0
+                            "maxStudents": 0
                         }
                         '''
                 )
