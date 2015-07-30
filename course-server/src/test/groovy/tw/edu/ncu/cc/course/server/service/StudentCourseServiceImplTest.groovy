@@ -4,6 +4,7 @@ import org.junit.ClassRule
 import org.mockserver.model.Header
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.Parameter
 import org.springframework.beans.factory.annotation.Autowired
 import resource.ServerResource
 import specification.SpringSpecification
@@ -21,26 +22,29 @@ class StudentCourseServiceImplTest extends SpringSpecification {
     private String serverResponse =
                         '''
                         [
-                             {
-                                "serialNo" : 12034,
-                                "no" : "EL5001",
-                                "classNo" : "*",
-                                "name" : "Literature",
-                                "isClosed" : false,
-                                "memo": "freshman",
-                                "isMasterDoctor": false,
-                                "language": "Chinese",
-                                "passwordCard": "no",
-                                "isFirstRun": true,
-                                "isPreSelect": true,
-                                "teachers": ["Huffman"],
-                                "credit": 2,
-                                "classRooms": ["C2-209","C2-209"],
-                                "times": { "1" : [5,6] },
-                                "type": "required",
-                                "fullHalf": "half",
-                                "maxStudents": 0
-                            }
+                          {
+                            "serialNo" : 12034,
+                            "no" : "EL5001",
+                            "classNo" : "*",
+                            "name" : "文學\\/文化理論導讀",
+                            "isClosed" : false,
+                            "memo": "限三、四年級",
+                            "isMasterDoctor": false,
+                            "language": "國語",
+                            "passwordCard": "不使用",
+                            "isFirstRun": true,
+                            "isPreSelect": true,
+                            "teachers": [  "錢夫人", "阿土伯" ],
+                            "credit": 2,
+                            "classRooms": [ "C2-209", "C2-209" ],
+                            "times": {
+                                      "0": ["5"],
+                                      "2": ["3", "4"]
+                                    },
+                            "type": "必修",
+                            "fullHalf": "全",
+                            "maxStudents": 0
+                          }
                         ]
                         '''
 
@@ -49,7 +53,8 @@ class StudentCourseServiceImplTest extends SpringSpecification {
                 HttpRequest.request()
                         .withMethod( "GET" )
                         .withHeader( new Header( "Accept-Language", "zh_TW" ) )
-                        .withPath( "/student/101502549/selected" )
+                        .withPath( "/students/101502549/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "selected" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -59,7 +64,8 @@ class StudentCourseServiceImplTest extends SpringSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
-                        .withPath( "/student/101502550/tracking" )
+                        .withPath( "/students/101502550/courses" )
+                        .withQueryStringParameter( new Parameter( "filter", "tracking" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )

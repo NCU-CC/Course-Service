@@ -1,14 +1,14 @@
 
 allprojects{
     group = 'tw.edu.ncu.cc'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.2.0'
 }
 
 subprojects{
 
     apply plugin: 'groovy'
 
-    sourceCompatibility = 1.7
+    sourceCompatibility = 1.8
 
     tasks.withType( JavaCompile ) {
         options.encoding = "UTF-8"
@@ -16,14 +16,11 @@ subprojects{
 
     repositories {
         mavenCentral()
-        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     dependencies {
-
-        testCompile 'org.codehaus.groovy:groovy-all:2.3.6'
-        testCompile 'org.spockframework:spock-core:1.0-groovy-2.3-SNAPSHOT'
-
+        compile 'org.codehaus.groovy:groovy-all:2.4.1'
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     }
 
 }
