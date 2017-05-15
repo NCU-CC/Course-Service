@@ -15,6 +15,8 @@ import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcess
 
 class StudentCourseControllerTest extends IntegrationSpecification {
 
+    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
+
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
 
@@ -26,23 +28,23 @@ class StudentCourseControllerTest extends IntegrationSpecification {
                             "serialNo" : 12034,
                             "no" : "EL5001",
                             "classNo" : "*",
-                            "name" : "¤å¾Ç\\/¤å¤Æ²z½×¾ÉÅª",
+                            "name" : "ï¿½ï¿½ï¿½ï¿½\\/ï¿½ï¿½ï¿½Æ²zï¿½×¾ï¿½Åª",
                             "isClosed" : false,
-                            "memo": "­­¤T¡B¥|¦~¯Å",
+                            "memo": "ï¿½ï¿½ï¿½Tï¿½Bï¿½|ï¿½~ï¿½ï¿½",
                             "isMasterDoctor": false,
-                            "language": "°ê»y",
-                            "passwordCard": "¤£¨Ï¥Î",
+                            "language": "ï¿½ï¿½ï¿½y",
+                            "passwordCard": "ï¿½ï¿½ï¿½Ï¥ï¿½",
                             "isFirstRun": true,
                             "isPreSelect": true,
-                            "teachers": [  "¿ú¤Ò¤H", "ªü¤g§B" ],
+                            "teachers": [  "ï¿½ï¿½ï¿½Ò¤H", "ï¿½ï¿½ï¿½gï¿½B" ],
                             "credit": 2,
                             "classRooms": [ "C2-209", "C2-209" ],
                             "times": {
                                       "0": ["5"],
                                       "2": ["3", "4"]
                                     },
-                            "type": "¥²­×",
-                            "fullHalf": "¥þ",
+                            "type": "ï¿½ï¿½ï¿½ï¿½",
+                            "fullHalf": "ï¿½ï¿½",
                             "maxStudents": 0
                           }
                         ]
@@ -92,6 +94,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                         get( "/v1/student/selected" )
+                            //.with( token )
                             .with( accessToken().user( "101502549" ).scope( "course.schedule.read" ) )
                             .header( "Accept-Language", "en_US" )
                     ).andExpect(
@@ -107,6 +110,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                         get( "/v1/student/tracking" )
+                            //.with( token )
                             .with( accessToken().user( "101502549" ).scope( "course.schedule.read" ) )
                             .header( "Accept-Language", "en_US" )
                     ).andExpect(
@@ -122,6 +126,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/student/rejected" )
+                                    //.with( token )
                                     .with( accessToken().user( "101502549" ).scope( "course.schedule.read" ) )
                                     .header( "Accept-Language", "en_US" )
                     ).andExpect(
@@ -136,6 +141,7 @@ class StudentCourseControllerTest extends IntegrationSpecification {
         expect:
             server().perform(
                 get( "/v1/student/tracking" )
+                    //.with( token )
                     .with( accessToken().user( "101502549" ).scope( "INVALID" ) )
                     .header( "Accept-Language", "en_US" )
             ).andExpect(

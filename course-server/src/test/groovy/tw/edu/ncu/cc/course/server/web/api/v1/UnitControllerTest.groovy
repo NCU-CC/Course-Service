@@ -10,10 +10,12 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
 
 
 class UnitControllerTest extends IntegrationSpecification {
+
+    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -32,7 +34,7 @@ class UnitControllerTest extends IntegrationSpecification {
                         '''
                         [
                           {
-                            "name" : "¤å¾Ç°|",
+                            "name" : "ï¿½ï¿½ï¿½Ç°|",
                             "id" : "deptI1I1000I0"
                           }
                         ]
@@ -52,7 +54,7 @@ class UnitControllerTest extends IntegrationSpecification {
                         '''
                         [
                           {
-                            "name" :  "¤¤°ê¤å¾Ç¨t",
+                            "name" :  "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¨t",
                             "id" : "deptI1I1001I0"
                           }
                         ]
@@ -72,7 +74,7 @@ class UnitControllerTest extends IntegrationSpecification {
                         '''
                         [
                             {
-                              "name" : "¤¤°ê¤å¾Ç¨t[¤£¤ÀÃþ]",
+                              "name" : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¨t[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]",
                               "id" : "cofuZdeptI1I1001I0ZcofgI0"
                             }
                         ]
@@ -86,7 +88,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/colleges" )
-                                .with( apiToken() )
+                                .with( token )
                                 .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -101,7 +103,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/colleges/deptI1I1000I0/departments" )
-                                    .with( apiToken() )
+                                    .with( token )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -116,7 +118,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/departments/deptI1I1001I0/targets" )
-                                    .with( apiToken() )
+                                    .with( token )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()

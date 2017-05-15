@@ -10,10 +10,12 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
 
 
 class CourseControllerTest extends IntegrationSpecification {
+
+    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -34,23 +36,23 @@ class CourseControllerTest extends IntegrationSpecification {
                             "serialNo" : 12034,
                             "no" : "EL5001",
                             "classNo" : "*",
-                            "name" : "¤å¾Ç/¤å¤Æ²z½×¾ÉÅª",
+                            "name" : "ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½Æ²zï¿½×¾ï¿½Åª",
                             "isClosed" : false,
-                            "memo": "­­¤T¡B¥|¦~¯Å",
+                            "memo": "ï¿½ï¿½ï¿½Tï¿½Bï¿½|ï¿½~ï¿½ï¿½",
                             "isMasterDoctor": false,
-                            "language": "°ê»y",
-                            "passwordCard": "¤£¨Ï¥Î",
+                            "language": "ï¿½ï¿½ï¿½y",
+                            "passwordCard": "ï¿½ï¿½ï¿½Ï¥ï¿½",
                             "isFirstRun": true,
                             "isPreSelect": true,
-                            "teachers": [  "¿ú¤Ò¤H", "ªü¤g§B" ],
+                            "teachers": [  "ï¿½ï¿½ï¿½Ò¤H", "ï¿½ï¿½ï¿½gï¿½B" ],
                             "credit": 2,
                             "classRooms": [ "C2-209", "C2-209" ],
                             "times": {
                                       "0": ["5"],
                                       "2": ["3", "4"]
                                     },
-                            "type": "¥²­×",
-                            "fullHalf": "¥þ",
+                            "type": "ï¿½ï¿½ï¿½ï¿½",
+                            "fullHalf": "ï¿½ï¿½",
                             "maxStudents": 0
                         }
                         '''
@@ -70,7 +72,7 @@ class CourseControllerTest extends IntegrationSpecification {
                         {
                           "serialNo" : "91001",
                           "no" : "LA4001",
-                          "name" : "¤å¾Ç»P¼@³õ",
+                          "name" : "ï¿½ï¿½ï¿½Ç»Pï¿½@ï¿½ï¿½",
                           "memo" : "some memo here"
                         }
                         '''
@@ -83,7 +85,7 @@ class CourseControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/courses/12034" )
-                                    .with( apiToken() )
+                                    .with( token )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -98,7 +100,7 @@ class CourseControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/courses/91001/limit" )
-                                    .with( apiToken() )
+                                    .with( token )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()

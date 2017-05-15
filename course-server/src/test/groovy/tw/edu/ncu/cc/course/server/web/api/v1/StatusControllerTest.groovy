@@ -10,9 +10,11 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
 
 class StatusControllerTest extends IntegrationSpecification {
+
+    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -31,7 +33,7 @@ class StatusControllerTest extends IntegrationSpecification {
                             '''
                             {
                               "semester" : 1021 ,
-                              "stage" : "¥[°h¿ï¶¥¬q"
+                              "stage" : "ï¿½[ï¿½hï¿½ï¶¥ï¿½q"
                             }
                             '''
                         )
@@ -49,7 +51,7 @@ class StatusControllerTest extends IntegrationSpecification {
                         '''
                             {
                               "semester" : 1022 ,
-                              "stage" : "¥[°h¿ï¶¥¬q"
+                              "stage" : "ï¿½[ï¿½hï¿½ï¶¥ï¿½q"
                             }
                             '''
                 )
@@ -61,7 +63,7 @@ class StatusControllerTest extends IntegrationSpecification {
             def response = JSON(
                 server().perform(
                         get( "/v1/status" )
-                            .with( apiToken() )
+                            .with( token )
                             .header( "Accept-Language", "en_US" )
                 ).andExpect(
                         status().isOk()
@@ -76,7 +78,7 @@ class StatusControllerTest extends IntegrationSpecification {
             def response = JSON(
                 server().perform(
                         get( "/v1/status" )
-                            .with( apiToken() )
+                            .with( token )
                 ).andExpect(
                         status().isOk()
                 ).andReturn()
