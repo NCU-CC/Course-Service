@@ -10,11 +10,9 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
 
 class StatusControllerTest extends IntegrationSpecification {
-
-    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -63,7 +61,7 @@ class StatusControllerTest extends IntegrationSpecification {
             def response = JSON(
                 server().perform(
                         get( "/v1/status" )
-                            .with( token )
+                            .with( apiToken() )
                             .header( "Accept-Language", "en_US" )
                 ).andExpect(
                         status().isOk()
@@ -78,7 +76,7 @@ class StatusControllerTest extends IntegrationSpecification {
             def response = JSON(
                 server().perform(
                         get( "/v1/status" )
-                            .with( token )
+                            .with( apiToken() )
                 ).andExpect(
                         status().isOk()
                 ).andReturn()

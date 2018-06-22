@@ -11,11 +11,9 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
 
 class SearchControllerTest extends IntegrationSpecification {
-
-    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -105,7 +103,7 @@ class SearchControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/courses" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                                     .param( "deptId", "deptI1I1000I0" )
                     ).andExpect(
@@ -121,7 +119,7 @@ class SearchControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/departments/deptI1I1000I0/courses" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -136,7 +134,7 @@ class SearchControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/targets/cofuZdeptI1I1001I0ZcofgI0/courses" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -151,7 +149,7 @@ class SearchControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/summer/105/courses" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()

@@ -10,12 +10,10 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
 
 
 class UnitControllerTest extends IntegrationSpecification {
-
-    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -88,7 +86,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/colleges" )
-                                .with( token )
+                                .with( apiToken() )
                                 .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -103,7 +101,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/colleges/deptI1I1000I0/departments" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
@@ -118,7 +116,7 @@ class UnitControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/departments/deptI1I1001I0/targets" )
-                                    .with( token )
+                                    .with( apiToken() )
                                     .header( "Accept-Language", "zh_TW" )
                     ).andExpect(
                             status().isOk()
